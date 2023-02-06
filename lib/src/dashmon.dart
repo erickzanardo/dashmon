@@ -50,8 +50,6 @@ class Dashmon {
 
   void _processError(String line) {
     _print(line);
-    // _process.kill();
-    // exit(1);
   }
 
   Future<void> start() async {
