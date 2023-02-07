@@ -50,8 +50,6 @@ class Dashmon {
 
   void _processError(String line) {
     _print(line);
-    _process.kill();
-    exit(1);
   }
 
   Future<void> start() async {
@@ -59,13 +57,9 @@ class Dashmon {
         ? Process.start('fvm', ['flutter', 'run', ..._proxiedArgs])
         : Process.start('flutter', ['run', ..._proxiedArgs]));
 
-    _process.stdout
-        .transform(utf8.decoder)
-        .forEach(_processLine);
+    _process.stdout.transform(utf8.decoder).forEach(_processLine);
 
-    _process.stderr
-        .transform(utf8.decoder)
-        .forEach(_processError);
+    _process.stderr.transform(utf8.decoder).forEach(_processError);
 
     final currentDir = File('.');
 
@@ -80,5 +74,11 @@ class Dashmon {
         }
       }
     });
+
+    stdin.lineMode = false;
+    stdin.echoMode = false;
+    stdin.transform(utf8.decoder).forEach(_process.stdin.write);
+    final exitCode = await _process.exitCode;
+    exit(exitCode);
   }
 }
