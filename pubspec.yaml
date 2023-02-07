@@ -1,6 +1,6 @@
 name: dashmon
 description: A cli tool to run Flutter applications and auto hot reload it when files are changed
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/erickzanardo/dashmon
 
 executables:
