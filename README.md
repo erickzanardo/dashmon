@@ -22,6 +22,15 @@ All arguments passed to it will be proxied to the `flutter run` command, so if y
 $ dashmon -d emulator-5555
 ```
 
+You can also use attach command to attach to existing running Flutter instance:
+
+```
+dashmon attach
+```
+
+All arguments are passed like with `run` command
+
+
 ## FVM support
 
 Dashmon supports [fvm](https://github.com/leoafarias/fvm) out of the box. Assuming that you have `fvm` installed on your computer, to run dashmon using fvm under the hood, just pass `--fvm` to it:

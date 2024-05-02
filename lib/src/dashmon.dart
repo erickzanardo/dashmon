@@ -9,6 +9,7 @@ class Dashmon {
 
   final List<String> _proxiedArgs = [];
   bool _isFvm = false;
+  bool _isAttach = false;
 
   Dashmon(this.args) {
     _parseArgs();
@@ -18,6 +19,11 @@ class Dashmon {
     for (String arg in args) {
       if (arg == '--fvm') {
         _isFvm = true;
+        continue;
+      }
+
+      if (arg == 'attach') {
+        _isAttach = true;
         continue;
       }
 
@@ -54,8 +60,10 @@ class Dashmon {
 
   Future<void> start() async {
     _process = await (_isFvm
-        ? Process.start('fvm', ['flutter', 'run', ..._proxiedArgs])
-        : Process.start('flutter', ['run', ..._proxiedArgs]));
+        ? Process.start(
+            'fvm', ['flutter', _isAttach ? 'attach' : 'run', ..._proxiedArgs])
+        : Process.start(
+            'flutter', [_isAttach ? 'attach' : 'run', ..._proxiedArgs]));
 
     _process.stdout.transform(utf8.decoder).forEach(_processLine);
 
